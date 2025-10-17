@@ -1,0 +1,240 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart | The Food Hub</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: url("{% static 'category/images/food_img5.jpg' %}") no-repeat center center fixed;
+      background-size: cover;
+      font-family: "Poppins", sans-serif;
+      color: #fff;
+    }
+
+    .navbar {
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 25px rgba(255, 193, 7, 0.25);
+    }
+
+    .navbar-brand {
+      color: #ffc107 !important;
+      font-weight: 700;
+      font-size: 1.3rem;
+      letter-spacing: 1px;
+    }
+
+    /* Cart Container */
+    .cart-container {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(15px);
+      border-radius: 25px;
+      padding: 40px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+      margin-top: 70px;
+      max-width: 900px;
+      transition: 0.4s ease;
+    }
+
+    .cart-container:hover {
+      box-shadow: 0 0 35px rgba(255, 193, 7, 0.2);
+    }
+
+    h2 {
+      color: #ffc107;
+      text-shadow: 0 0 12px rgba(255, 193, 7, 0.4);
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    /* Cart Items */
+    .cart-item {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 20px 0;
+      transition: 0.3s ease;
+    }
+
+    .cart-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      transform: scale(1.02);
+    }
+
+    .cart-img {
+      width: 75px;
+      height: 75px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(255, 193, 7, 0.3);
+      transition: 0.3s ease;
+    }
+
+    .cart-item:hover .cart-img {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 193, 7, 0.6);
+    }
+
+    .btn-qty {
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      color: #fff;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 18px;
+      transition: 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn-qty:hover {
+      background: #ffc107;
+      color: #000;
+      transform: scale(1.15);
+    }
+
+    .text-muted {
+      color: rgba(255, 255, 255, 0.7) !important;
+    }
+
+    .total {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ffc107;
+      margin-top: 25px;
+      border-top: 2px solid rgba(255, 255, 255, 0.2);
+      padding-top: 15px;
+      text-shadow: 0 0 10px rgba(255, 193, 7, 0.4);
+    }
+
+    .btn-danger {
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s ease;
+    }
+
+    .btn-danger:hover {
+      background: #dc3545;
+      box-shadow: 0 0 12px rgba(220, 53, 69, 0.6);
+      transform: rotate(10deg);
+    }
+
+    footer {
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 60px;
+      font-size: 0.9rem;
+    }
+
+    footer p {
+      opacity: 0.85;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="{% url 'home' %}">
+        🍔 The Food Hub
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="{% url 'about' %}">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'category_list' %}">Category</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'menu_list' %}">Menu</a></li>
+          {% if request.user.is_staff %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'allusers' %}">Users</a></li>
+          {% endif %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'view_cart' %}">Cart</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'order_list' %}">Orders</a></li>
+          {% if request.user.is_authenticated %}
+          <li class="nav-item ms-2">
+            <a class="btn btn-outline-danger btn-sm" href="{% url 'logout_view' %}">
+              <i class="bi bi-box-arrow-right me-1"></i> Logout
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Cart Section -->
+  <div class="container cart-container">
+    <h2 class="text-center mb-4">🛒 Your Cart</h2>
+
+    {% if cart.items.all %}
+      {% for item in cart.items.all %}
+        <div class="cart-item d-flex justify-content-between align-items-center">
+          
+          <!-- Image + Item Info -->
+          <div class="d-flex align-items-center">
+            {% if item.menu.image %}
+              <img src="{{ item.menu.image.url }}" alt="{{ item.menu.name }}" class="cart-img me-3">
+            {% else %}
+              <img src="{% static 'images/default.jpg' %}" alt="No Image" class="cart-img me-3">
+            {% endif %}
+            <div>
+              <h5 class="mb-1 text-light">{{ item.menu.name }}</h5>
+              <p class="text-muted mb-0">${{ item.menu.price }} each</p>
+            </div>
+          </div>
+
+          <!-- Quantity Controls -->
+          <div class="d-flex align-items-center">
+            <a href="{% url 'decrease_quantity' item.id %}" class="btn btn-qty me-2">−</a>
+            <span class="fw-bold fs-5 text-light">{{ item.quantity }}</span>
+            <a href="{% url 'increase_quantity' item.id %}" class="btn btn-qty ms-2">+</a>
+          </div>
+
+          <!-- Subtotal and Remove -->
+          <div class="d-flex align-items-center">
+            <span class="fw-bold text-warning">${{ item.subtotal }}</span>
+            <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger btn-sm ms-3">
+              <i class="bi bi-trash3"></i>
+            </a>
+          </div>
+
+        </div>
+      {% endfor %}
+
+      <div class="text-end total">
+        <p>Total: ${{ cart.total_price }}</p>
+      </div>
+    {% else %}
+      <p class="text-center text-light mt-4">Your cart is empty.</p>
+    {% endif %}
+  </div>
+  <a href="{% url 'checkout' %}">Checkout</a>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 <strong>Food Hub</strong> | All Rights Reserved</p>
+    <p class="small">Built with ❤️ by <strong>Runsewe Michael (The CodeKing👑)</strong></p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

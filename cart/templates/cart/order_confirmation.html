@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Order Confirmation</title>
+  <style>
+    body { font-family: Arial, sans-serif; color: #333; }
+    .container { max-width: 600px; margin: auto; background: #f8f8f8; padding: 20px; border-radius: 8px; }
+    h2 { color: #2a2a2a; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border-bottom: 1px solid #ddd; padding: 8px; text-align: left; }
+    .total { font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Thank you for your order, {{ user.username }}!</h2>
+    <p>Your order <strong>#{{ order.id }}</strong> has been successfully placed on {{ order.created_at|date:"M d, Y" }}.</p>
+
+    <h3>Order Summary:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Qty</th>
+          <th>Price</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in order.items.all %}
+        <tr>
+          <td>{{ item.menu.name }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>${{ item.price }}</td>
+          <td>${{ item.subtotal }}</td>
+        </tr>
+        {% endfor %}
+        <tr class="total">
+          <td colspan="3" align="right">Total:</td>
+          <td>${{ order.total_amount }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>We’ll notify you once your items have shipped. You can view your order details anytime by logging into your account.</p>
+    <p>— The Food Hub</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,195 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Update Category | The Food Hub</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: url("{% static 'category/images/food_img3.jpg' %}") no-repeat center center fixed;
+      background-size: cover;
+      font-family: "Poppins", sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+      backdrop-filter: blur(4px);
+    }
+
+    .navbar {
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 15px rgba(255, 193, 7, 0.2);
+    }
+
+    .navbar-brand {
+      color: #ffc107 !important;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .form-container {
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(20px);
+      border-radius: 25px;
+      padding: 50px;
+      margin-top: 80px;
+      box-shadow: 0 0 30px rgba(255, 193, 7, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .form-label {
+      color: #ffc107;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .form-control {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .form-control:focus {
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 10px rgba(255, 193, 7, 0.4);
+      border-color: #ffc107;
+    }
+
+    .btn-warning {
+      background-color: #ffc107;
+      border: none;
+      font-weight: 600;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-warning:hover {
+      background-color: #ffca2c;
+      transform: scale(1.05);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: #fff;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+
+    footer {
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 80px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    footer i {
+      color: #ff4757;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}">
+        🍔 The Food Hub
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="{% url 'about' %}">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'category_list' %}">Category</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'menu_list' %}">Menu</a></li>
+          {% if request.user.is_staff %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'allusers' %}">Users</a></li>
+          {% endif %}
+          {% if request.user.is_authenticated %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'view_cart' %}">Cart</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'order_list' %}">Orders</a></li>
+          <li class="nav-item ms-2">
+            <a class="btn btn-danger btn-sm" href="{% url 'logout_view' %}">
+              <i class="bi bi-box-arrow-right me-1"></i> Logout
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Update Category Form -->
+  <div class="container form-container">
+    <h2 class="text-center text-warning fw-bold mb-4">
+      <i class="bi bi-pencil-square me-2"></i>Update Category
+    </h2>
+
+    <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label class="form-label">Category Name</label>
+        <input type="text" name="name" class="form-control" value="{{ category.name }}" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Slug</label>
+        <input type="text" name="slug" class="form-control" value="{{ category.slug }}" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea name="description" rows="4" class="form-control" required>{{ category.description }}</textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Category Image</label><br>
+        {% if category.image %}
+          <img src="{{ category.image.url }}" alt="{{ category.name }}" class="img-thumbnail mb-3" width="150">
+        {% endif %}
+        <input type="file" name="image" class="form-control">
+      </div>
+
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-warning px-4 me-2">
+          <i class="bi bi-save me-2"></i>Save Changes
+        </button>
+        <a href="{% url 'category_list' %}" class="btn btn-secondary px-4">
+          <i class="bi bi-arrow-left me-2"></i>Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p class="mb-0">© 2025 <strong>The Food Hub</strong> | All Rights Reserved</p>
+    <p>Made with <i class="bi bi-heart-fill"></i> by <strong>The CodeKing👑</strong></p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+# === Logs ===
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# === Node.js (React - client) ===
+client/node_modules/
+client/.env
+client/build/
+client/dist/
+client/dist-ssr/
+client/*.local
+
+# === Python (Django - server) ===
+server/__pycache__/
+server/*.py[cod]
+server/.env
+server/venv/
+server/db.sqlite3
+server/staticfiles/
+
+# === IDE/editor files ===
+.vscode/
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# === Misc ===
+*.lock
+
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# =========================
+# Django
+# =========================
+*.log
+*.pot
+*.pyc
+db.sqlite3
+db.sqlite3-journal
+
+# Migrations (you can remove this if you want to keep them)
+*/migrations/__pycache__/
+*/migrations/*.py
+
+# =========================
+# Media / Static files
+# =========================
+/media/
+/staticfiles/
+/static/
+
+# =========================
+# Environment
+# =========================
+.env
+*.env
+.env.*
+venv/
+ENV/
+env/
+.venv/
+
+# =========================
+# IDEs / Editors
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Deployment
+# =========================
+*.bak
+*.orig
+*.rej
+*.sublime-project
+*.sublime-workspace
+node_modules/
+db.sqlite3
+

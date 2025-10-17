@@ -1,0 +1,238 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Details | Food Hub</title>
+
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    /* Background */
+    body {
+      background: url("{% static 'category/images/food_img4.jpg' %}") no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(0, 0, 0, 0.75), rgba(255,179,71,0.15), rgba(0,0,0,0.65));
+      background-size: 200% 200%;
+      animation: moveGradient 10s ease infinite;
+      z-index: 0;
+    }
+
+    @keyframes moveGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 179, 71, 0.2);
+      transition: all 0.4s ease;
+      position: relative;
+      z-index: 10;
+    }
+
+    .navbar-brand {
+      color: #ffb347 !important;
+      font-weight: 700;
+      font-size: 1.6rem;
+      text-shadow: 0 0 10px rgba(255, 179, 71, 0.8);
+    }
+
+    .nav-link {
+      color: #f8f9fa !important;
+      font-size: 1.3rem;
+      margin-right: 14px;
+      transition: 0.3s ease;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: #ffb347 !important;
+      text-shadow: 0 0 10px rgba(255, 179, 71, 0.8);
+    }
+
+    /* Card */
+    .order-card {
+      position: relative;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border-radius: 25px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      padding: 30px;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      color: #ffb347;
+      text-shadow: 0 0 10px rgba(255, 179, 71, 0.8);
+      font-weight: 700;
+    }
+
+    hr {
+      border-color: rgba(255, 179, 71, 0.3);
+    }
+
+    /* Table */
+    .table {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .table thead {
+      background: rgba(255, 179, 71, 0.2);
+      color: #ffca77;
+    }
+
+    .table tbody tr:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      transition: background 0.3s ease;
+    }
+
+    .btn-secondary {
+      background: linear-gradient(90deg, #ffb347, #ffc977);
+      color: #000;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      transition: 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 179, 71, 0.7);
+      color: #000;
+    }
+
+    footer {
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(15px);
+      padding: 20px 0;
+      text-align: center;
+      color: white;
+      border-top: 1px solid rgba(255, 179, 71, 0.3);
+      margin-top: 80px;
+      position: relative;
+      z-index: 2;
+    }
+
+    footer strong {
+      color: #ffb347;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="{% url 'home' %}">
+        🍔 The Food Hub
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="{% url 'about' %}">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'category_list' %}">Category</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'menu_list' %}">Menu</a></li>
+          {% if request.user.is_staff %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'allusers' %}">Users</a></li>
+          {% endif %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'view_cart' %}">Cart</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'order_list' %}">Orders</a></li>
+          {% if request.user.is_authenticated %}
+          <li class="nav-item ms-2">
+            <a class="btn btn-danger btn-sm" href="{% url 'logout_view' %}">
+              <i class="bi bi-box-arrow-right me-1"></i> Logout
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Order Details -->
+  <div class="container py-5 d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="order-card w-100" style="max-width: 800px;">
+      <h2 class="mb-4"><i class="bi bi-receipt-cutoff me-2"></i>Order #{{ order.id }}</h2>
+
+      <p><strong>Date:</strong> {{ order.created_at|date:"M d, Y - H:i" }}</p>
+      <p><strong>Status:</strong> {{ order.status }}</p>
+      <p><strong>Total Amount:</strong> ${{ order.total_amount }}</p>
+
+      {% if order.shipping_address %}
+        <p><strong>Shipping Address:</strong><br>{{ order.shipping_address }}</p>
+      {% endif %}
+
+      <hr>
+
+      <h4 class="text-warning mb-3"><i class="bi bi-box-seam me-2"></i>Order Items</h4>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in order.items.all %}
+            <tr>
+              <td>{{ item.product.name }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>${{ item.price }}</td>
+              <td>${{ item.subtotal }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <hr>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <a href="{% url 'order_list' %}" class="btn btn-secondary">
+          <i class="bi bi-arrow-left me-1"></i> Back to Orders
+        </a>
+        <p class="mt-2 fs-5 text-warning"><strong>Total:</strong> ${{ order.total_amount }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 <strong>Food Hub</strong> | All Rights Reserved</p>
+    <p class="small">Built with ❤️ by <strong>Runsewe Michael (The CodeKing👑)</strong></p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
