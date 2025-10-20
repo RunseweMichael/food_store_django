@@ -36,3 +36,10 @@ DATABASES = {
         conn_max_age=600,
     )
 }
+
+
+
+
+
+
+postgresql://food_store_g8up_user:VYTDT7ECTOHmshY4Ectk5owy1dCfoh2X@dpg-d3p4hgc9c44c738mbmdg-a/food_store_g8up
