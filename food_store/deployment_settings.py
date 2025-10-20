@@ -1,7 +1,7 @@
 import os
 import dj_database_url
-from .settings import *
-from .settings import BASE_DIR
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
