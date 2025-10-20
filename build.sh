@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 set -o errexit
 
 echo "Using Python version:"
@@ -5,9 +6,11 @@ python --version
 
 pip install -r requirements.txt
 
-python manage.py collectstatic --no-input
+echo "Collecting static files..."
+python manage.py collectstatic --noinput
 
-# python manage.py migrate
-
+echo "Making migrations..."
 python manage.py makemigrations --noinput
+
+echo "Applying migrations..."
 python manage.py migrate --noinput
