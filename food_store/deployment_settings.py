@@ -3,10 +3,17 @@ import dj_database_url
 from .settings import *
 from .settings import BASE_DIR
 
-ALLOWED_HOSTS = [os.environ.get('RENDER_EXTERNAL_HOSTNAME')]
-CSRF_TRUSTED_ORIGINS = ['https://'+os.environ.get('RENDER_EXTERNAL_HOSTNAME')]
+ALLOWED_HOSTS = [os.environ.get('RENDER_EXTERNAL_HOSTNAME'),
+                'https://food-store-q56v.onrender.com',]
+CSRF_TRUSTED_ORIGINS = ['https://'+os.environ.get('RENDER_EXTERNAL_HOSTNAME'),
+                       'https://food-store-q56v.onrender.com',]
 DEBUG = False
 SECRET_KEY = os.environ.get('SECRET_KEY')
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'Lax'  # 'None' if cross-domain needed
+SESSION_COOKIE_SAMESITE = 'Lax'
 
 
 MIDDLEWARE = [
@@ -42,4 +49,4 @@ DATABASES = {
 
 
 
-postgresql://food_store_g8up_user:VYTDT7ECTOHmshY4Ectk5owy1dCfoh2X@dpg-d3p4hgc9c44c738mbmdg-a/food_store_g8up
+# postgresql://food_store_g8up_user:VYTDT7ECTOHmshY4Ectk5owy1dCfoh2X@dpg-d3p4hgc9c44c738mbmdg-a/food_store_g8up
