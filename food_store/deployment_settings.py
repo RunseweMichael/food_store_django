@@ -3,8 +3,10 @@ import dj_database_url
 from .settings import *
 from .settings import BASE_DIR
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 ALLOWED_HOSTS = [os.environ.get('RENDER_EXTERNAL_HOSTNAME'),
-                'https://food-store-q56v.onrender.com',]
+                'food-store-q56v.onrender.com',]
 CSRF_TRUSTED_ORIGINS = ['https://'+os.environ.get('RENDER_EXTERNAL_HOSTNAME'),
                        'https://food-store-q56v.onrender.com',]
 DEBUG = False
@@ -47,6 +49,3 @@ DATABASES = {
 
 
 
-
-
-# postgresql://food_store_g8up_user:VYTDT7ECTOHmshY4Ectk5owy1dCfoh2X@dpg-d3p4hgc9c44c738mbmdg-a/food_store_g8up
