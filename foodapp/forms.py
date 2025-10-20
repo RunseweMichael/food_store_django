@@ -11,9 +11,6 @@ class RegistrationForm(forms.Form):
     age = forms.IntegerField(required=False)
     phone = forms.CharField(max_length=20, required=False)
 
-    class Meta:
-        model = User
-        fields = '__all__'
 
 
 class LoginForm(forms.Form):

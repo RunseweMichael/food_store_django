@@ -101,15 +101,12 @@ def updateuser(request, id):
 
 
 
-@login_required
+
 def home(request):
     return render(request, 'foodapp/home.html')
 
-
-@login_required
 def about(request):
     return render(request, 'foodapp/about.html')
 
-@login_required
 def contact(request):
     return render(request, 'foodapp/contact.html')
