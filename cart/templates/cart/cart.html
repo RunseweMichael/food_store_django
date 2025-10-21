@@ -17,25 +17,28 @@
       color: #fff;
     }
 
-    .checkout-btn {
-  display: inline-block;
+ .checkout-btn {
   background-color: #4f46e5; /* Indigo */
   color: white;
-  padding: 10px 20px;
-  border-radius: 8px;
+  padding: 12px 28px;
+  border-radius: 10px;
   text-decoration: none;
   font-weight: 600;
+  font-size: 1rem;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 0 15px rgba(79, 70, 229, 0.4);
 }
 
 .checkout-btn:hover {
   background-color: #4338ca;
   transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(67, 56, 202, 0.6);
 }
 
 .checkout-btn:active {
   transform: translateY(0);
 }
+
 
 
     .navbar {
@@ -247,14 +250,18 @@
     {% else %}
       <p class="text-center text-light mt-4">Your cart is empty.</p>
     {% endif %}
+
+    <div class="text-end mt-4">
+      <a href="{% url 'checkout' %}" class="checkout-btn">Proceed to Checkout</a>
+    </div>
+
   </div>
-  <a href="{% url 'checkout' %}" class="checkout-btn mt-4">Checkout</a>
 
   <!-- Footer -->
-  <footer>
+  <!-- <footer>
     <p>© 2025 <strong>Food Hub</strong> | All Rights Reserved</p>
     <p class="small">Built with ❤️ by <strong>Runsewe Michael (The CodeKing👑)</strong></p>
-  </footer>
+  </footer> -->
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
