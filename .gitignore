@@ -20,8 +20,6 @@ server/__pycache__/
 server/*.py[cod]
 server/.env
 server/venv/
-server/db.sqlite3
-server/staticfiles/
 
 # === IDE/editor files ===
 .vscode/
@@ -57,19 +55,13 @@ build/
 *.log
 *.pot
 *.pyc
-db.sqlite3
-db.sqlite3-journal
 
-# Migrations (you can remove this if you want to keep them)
-*/migrations/__pycache__/
-*/migrations/*.py
+
 
 # =========================
 # Media / Static files
 # =========================
-/media/
-/staticfiles/
-/static/
+
 
 # =========================
 # Environment
@@ -105,11 +97,10 @@ Thumbs.db
 *.sublime-project
 *.sublime-workspace
 node_modules/
-db.sqlite3
 
 
 
 
 
 
-# postgresql://food_store_g8up_user:VYTDT7ECTOHmshY4Ectk5owy1dCfoh2X@dpg-d3p4hgc9c44c738mbmdg-a/food_store_g8up
+
