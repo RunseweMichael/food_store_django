@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from order.models import Order, OrderItem
@@ -55,7 +56,12 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 
-@transaction.atomic
+# @transaction.atomic
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
 def checkout(request):
     cart = get_object_or_404(Cart, user=request.user)
     if not cart.items.exists():
@@ -99,23 +105,23 @@ def checkout(request):
     # Clear cart
     cart.items.all().delete()
 
-    # ✅ Send order confirmation email
+    # ✅ Send order confirmation email using SendGrid
     subject = f"Order #{order.id} Confirmation - The Food Hub"
     html_message = render_to_string('cart/order_confirmation.html', {'order': order, 'user': request.user})
     plain_message = strip_tags(html_message)
-    from_email = None  # Uses DEFAULT_FROM_EMAIL
-    to = [request.user.email]
 
-    send_mail(subject, plain_message, from_email, to, html_message=html_message)
+    message = Mail(
+        from_email="runsewemichael93@gmail.com",  # This must be a verified sender in SendGrid
+        to_emails=request.user.email,
+        subject=subject,
+        html_content=html_message
+    )
+
+    try:
+        sg = SendGridAPIClient(os.getenv("SENDGRID_API_KEY"))
+        sg.send(message)
+    except Exception as e:
+        print("❌ Email send failed:", e)
 
     messages.success(request, f"Order #{order.id} created successfully! A confirmation email has been sent.")
     return redirect('order_detail', order_id=order.id)
-
-
-
-
-
-
-
-
-
