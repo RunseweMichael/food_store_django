@@ -110,3 +110,12 @@ def checkout(request):
 
     messages.success(request, f"Order #{order.id} created successfully! A confirmation email has been sent.")
     return redirect('order_detail', order_id=order.id)
+
+
+
+
+
+
+
+
+
