@@ -17,6 +17,27 @@
       color: #fff;
     }
 
+    .checkout-btn {
+  display: inline-block;
+  background-color: #4f46e5; /* Indigo */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.checkout-btn:hover {
+  background-color: #4338ca;
+  transform: translateY(-2px);
+}
+
+.checkout-btn:active {
+  transform: translateY(0);
+}
+
+
     .navbar {
       background: rgba(0, 0, 0, 0.6);
       backdrop-filter: blur(10px);
@@ -227,7 +248,7 @@
       <p class="text-center text-light mt-4">Your cart is empty.</p>
     {% endif %}
   </div>
-  <a href="{% url 'checkout' %}">Checkout</a>
+  <a href="{% url 'checkout' %}" class="checkout-btn mt-4">Checkout</a>
 
   <!-- Footer -->
   <footer>

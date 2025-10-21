@@ -238,7 +238,7 @@
       <div class="carousel-inner">
         {% for rc in related_categories %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
-          <a href="{% url 'category_detail' rc.slug %}">
+          <a href="{% url 'category_detail' rc.id %}">
             {% if rc.image %}
               <img src="{{ rc.image.url }}" class="d-block w-100" alt="{{ rc.name }}">
             {% else %}
